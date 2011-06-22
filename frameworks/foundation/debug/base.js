@@ -47,10 +47,16 @@ Fictum = {
         if(Fictum.isARegisteredUrl(this.get('address'))) {
           var response = Fictum.responseFor(this.get('address'), {json: this.get('isJSON')});
           response.set('request', this);
-          setTimeout(function() {
+          async = this.get("isAsynchronous");
+          if (async) {
+            setTimeout(function() {
+              response.set('status', 200);
+              response.notify();
+            }, 1);
+          } else {
             response.set('status', 200);
             response.notify();
-          }, 1);
+          } 
           return response;
         } else {
           return original(context);
