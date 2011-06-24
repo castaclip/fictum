@@ -10,27 +10,33 @@ Fictum.UrlStub = SC.Object.extend({
     this._setupUrl();
     this._setupResponse();
   },
-
+  
+  method: function() {
+    return this.get('options').method;
+  }.property('options').cacheable(),
+  
   status: function() {
     return this.get('options').status;
   }.property('options').cacheable(),
 
-  matchesUrl: function(url) {
-    return this.get('url').matches(url);
+  matchesUrl: function(url, method) {
+    return this.get('url').matches(url, method);
   },
 
   getResponse: function(store, options) {
-    var response = this.get('response').value(store);
+    var response = this.get('response').value(store, options.request);
     if(options && options.json) response = jQuery.parseJSON(response);
     return SC.Response.create({body: response, status: this.get('status')});
   },
 
   _setupUrl: function() {
     var url = this.get('url');
+    var method = this.get('method');
+    
     if(SC.typeOf(url) == 'string') 
-      this.set('url', Fictum.StringUrl.create({url: url}));
+      this.set('url', Fictum.StringUrl.create({url: url, method: method}));
     else
-      this.set('url', Fictum.RegularExpressionUrl.create({url: url}));
+      this.set('url', Fictum.RegularExpressionUrl.create({url: url, method: method}));
   },
 
   _setupResponse: function() {

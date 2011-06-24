@@ -10,8 +10,8 @@ Fictum.Server = SC.Object.extend({
     return this;
   },
 
-  isARegisteredUrl: function(url) {
-    return this.get('urlStubs').hasUrl(url);
+  isARegisteredUrl: function(url, method) {
+    return this.get('urlStubs').hasUrl(url, method);
   },
 
   registerUrl: function(url, stubValue, options) {

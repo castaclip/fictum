@@ -12,9 +12,9 @@ Fictum = {
     this.server = undefined;
   },
 
-  isARegisteredUrl: function(url) {
+  isARegisteredUrl: function(url, method) {
     this._ensureServerIsSetup();
-    return this.server.isARegisteredUrl(url);
+    return this.server.isARegisteredUrl(url, method);
   },
 
   registerUrl: function(url, response, options) {
@@ -44,8 +44,10 @@ Fictum = {
 
     SC.Request.reopen({
       send: function(original, context) {
-        if(Fictum.isARegisteredUrl(this.get('address'))) {
-          var response = Fictum.responseFor(this.get('address'), {json: this.get('isJSON')});
+        this.set("body", context);
+
+        if(Fictum.isARegisteredUrl(this.get('address'), this.get("type"))) {
+          var response = Fictum.responseFor(this.get('address'), {json: this.get('isJSON'), request: this});
           response.set('request', this);
           async = this.get("isAsynchronous");
           if (async) {

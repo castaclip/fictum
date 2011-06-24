@@ -6,8 +6,8 @@ Fictum.UrlStubCollection = SC.Object.extend({
     this.set('urls', []);
   },
 
-  hasUrl: function(url) {
-    return this._findUrlStubByUrl(url) !== null; 
+  hasUrl: function(url, method) {
+    return this._findUrlStubByUrl(url, method) !== null; 
   },
 
   addUrl: function(url, stubValue, options) {
@@ -15,7 +15,7 @@ Fictum.UrlStubCollection = SC.Object.extend({
   },
 
   responseFor: function(url, resourceStore, options) {
-    var urlStub = this._findUrlStubByUrl(url);
+    var urlStub = this._findUrlStubByUrl(url, options.request.get('type'));
     return urlStub === null ? undefined : urlStub.getResponse(resourceStore, options);
   },
 
@@ -23,7 +23,7 @@ Fictum.UrlStubCollection = SC.Object.extend({
     this.set('urls', []);
   },
 
-  _findUrlStubByUrl: function(url) {
-    return this.get('urls').find(function(stub) { return stub.matchesUrl(url) })
+  _findUrlStubByUrl: function(url, method) {
+    return this.get('urls').find(function(stub) { return stub.matchesUrl(url, method) })
   },
 });
