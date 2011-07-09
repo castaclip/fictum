@@ -52,11 +52,15 @@ Fictum = {
           async = this.get("isAsynchronous");
           if (async) {
             setTimeout(function() {
-              response.set('status', 200);
+              if (!response.get('status')) {
+                response.set('status', 200);
+              }
               response.notify();
             }, 1);
           } else {
-            response.set('status', 200);
+            if (!response.get('status')) {
+              response.set('status', 200);
+            }
             response.notify();
           } 
           return response;
