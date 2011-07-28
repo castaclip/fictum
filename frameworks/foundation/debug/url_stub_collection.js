@@ -25,5 +25,5 @@ Fictum.UrlStubCollection = SC.Object.extend({
 
   _findUrlStubByUrl: function(url, method) {
     return this.get('urls').find(function(stub) { return stub.matchesUrl(url, method) })
-  },
+  }
 });
