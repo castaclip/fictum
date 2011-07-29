@@ -68,9 +68,9 @@ describe('Fictum', function() {
 
       it('asks the server if it has registerd the url', function() {
         var isARegisteredUrlSpy = spyOn(Fictum.server, 'isARegisteredUrl');
-        Fictum.isARegisteredUrl(url);
+        Fictum.isARegisteredUrl(url, "GET");
 
-        expect(isARegisteredUrlSpy).toHaveBeenCalledWith(url);
+        expect(isARegisteredUrlSpy).toHaveBeenCalledWith(url, "GET");
       });
 
       context('and the server has registered the url', function() {
