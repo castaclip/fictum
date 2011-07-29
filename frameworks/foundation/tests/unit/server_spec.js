@@ -8,10 +8,11 @@ describe('Fictum.Server', function() {
 
     it('delegates to it\'s url collection to know if the url is registered', function() {
       var url = 'someUrl';
+      var method = 'GET';
       urlStubsSpy = spyOn(server.get('urlStubs'), 'hasUrl');
-      server.isARegisteredUrl(url);
+      server.isARegisteredUrl(url, method);
 
-      expect(urlStubsSpy).toHaveBeenCalledWith(url);
+      expect(urlStubsSpy).toHaveBeenCalledWith(url, method);
     });
 
     context('when then given url has been registered', function() {
