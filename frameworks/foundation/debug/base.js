@@ -55,11 +55,26 @@ Fictum = {
               if (!response.get('status')) {
                 response.set('status', 200);
               }
+
+              if ((response.get('status') < 200) || (response.get('status') >= 300)) {
+                  try {
+                      msg = this.statusText || '';
+                  } catch(e2) {
+                      msg = '';
+                  }
+
+                  error = SC.$error(msg || "HTTP Request failed", "Request", response.get('status')) ;
+                  error.set("errorValue", this) ;
+                  response.set('isError', YES);
+                  response.set('errorObject', error);
+              }
+
               response.notify();
             }, 1);
           } else {
             if (!response.get('status')) {
               response.set('status', 200);
+              response.set('isError', YES);
             }
             response.notify();
           } 
