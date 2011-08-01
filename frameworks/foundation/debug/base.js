@@ -55,14 +55,11 @@ Fictum = {
               if (!response.get('status')) {
                 response.set('status', 200);
               }
-
-
               response.notify();
             }, 1);
           } else {
             if (!response.get('status')) {
               response.set('status', 200);
-              response.set('isError', YES);
             }
             response.notify();
           }
